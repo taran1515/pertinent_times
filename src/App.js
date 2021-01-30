@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+
+import './App.css'
+import News from './Component/News'
+import NewsType from './NewsType'
+import React, { useState } from 'react';
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    // const type = ['world', 'science', 'politics']
+
+    const [type, setType] = useState("");
+    const [data,setData] = useState("")
+
+    
+    function selectNews(e) {
+        setType(e.target.textContent)
+    
+    }
+
+    return (
+        <div className="App" >
+            <h1 > The Pertinent Times </h1> 
+
+            <button onClick={selectNews}>{NewsType[0].title}</button><br></br>
+            <button onClick={selectNews}>{NewsType[1].title}</button><br></br>
+            <button onClick={selectNews}>{NewsType[2].title}</button><br></br>
+
+            
+            
+            <News type={type}></News>
+        
+ 
+
+           
+        </div>
+       
+    );
 }
 
 export default App;
