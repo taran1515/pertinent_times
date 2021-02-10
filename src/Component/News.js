@@ -1,31 +1,53 @@
-import React, { useState } from 'react'
-import ReactDOM from 'react-dom'
-const API_KEY = 'JoCd7NoAcsFGjcOTS01ldNI0U4hOpmNs'
-const axios = require('axios');
+import React, { useState, useEffect } from "react";
+import NewsContent from "./NewsContent";
+import ReactDOM from "react-dom";
+// import API_KEY from '../../env';
+const API_KEY = "JoCd7NoAcsFGjcOTS01ldNI0U4hOpmNs";
+const axios = require("axios");
 
+function News({ type }) {
+  const [data, setData] = useState([]);
+  //   const [type] = useState(type);
 
-const [data] = ''
+  if (type == "") {
+    type = "science";
+  }
 
-async function getData(url) {
-    let data = await fetch(url)
-    let arr = await data.json()
-    
-    return arr
+  useEffect(() => {
+    fetchData(type);
+  }, [type]);
+
+  const fetchData = async (type) => {
+    try {
+      const response = await axios.get(
+        `https://api.nytimes.com/svc/topstories/v2/${type}.json?api-key=${API_KEY}`
+      );
+      setData(response.data["results"]);
+      console.log("ds");
+      console.log(data[0]["section"]);
+      console.log(typeof data[0]);
+      // console.log(data[0].section)
+    } catch (err) {
+      console.warn(err);
     }
+  };
 
-function News(props) {  
-    // const [data, setData] = useState("")
-    let data = getData(`https://api.nytimes.com/svc/topstories/v2/${props.type}.json?api-key=${API_KEY}`)
-    
-    return (
-        <div>
-            News App  - {props.type}   
-            <div>
-               
-            </div>
-        </div>
-        )
-    
+  // var news = fetchData(type)
+
+  return (
+    <div>
+      <h3>News App - {type} </h3>
+      <br></br>
+
+      {/* {data.title}  */}
+      <div className="news">
+        {data.map((content) => {
+          return <h5> {content.section}</h5>;
+          // <NewsContent key={index} section={content['section']}></NewsContent>
+        })}
+      </div>
+    </div>
+  );
 }
 
-export default News
+export default News;

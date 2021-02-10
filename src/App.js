@@ -1,16 +1,15 @@
 
 import './App.css'
 import News from './Component/News'
+import NewsTypeLink from './Component/NewsTypeLink'
+
 import NewsType from './NewsType'
 import React, { useState } from 'react';
 
 
 function App() {
-    // const type = ['world', 'science', 'politics']
 
     const [type, setType] = useState("");
-    const [data,setData] = useState("")
-
     
     function selectNews(e) {
         setType(e.target.textContent)
@@ -20,10 +19,11 @@ function App() {
     return (
         <div className="App" >
             <h1 > The Pertinent Times </h1> 
+            {NewsType.map(newsType =>
+               <NewsTypeLink key={newsType.title} selectNews={selectNews} newsType={newsType}/>
+            )}
+           
 
-            <button onClick={selectNews}>{NewsType[0].title}</button><br></br>
-            <button onClick={selectNews}>{NewsType[1].title}</button><br></br>
-            <button onClick={selectNews}>{NewsType[2].title}</button><br></br>
 
             
             
